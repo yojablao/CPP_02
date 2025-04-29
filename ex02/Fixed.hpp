@@ -6,7 +6,7 @@
 /*   By: yojablao <yojablao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 18:25:03 by yojablao          #+#    #+#             */
-/*   Updated: 2025/04/26 20:26:05 by yojablao         ###   ########.fr       */
+/*   Updated: 2025/04/27 16:50:41 by yojablao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ public:
     Fixed operator-(const Fixed&a)const ;
     Fixed operator*(const Fixed&a)const ;
     Fixed operator/(const Fixed&a)const ;
-    Fixed& Fixed::operator++();
-    Fixed& Fixed::operator--();
-    Fixed Fixed::operator--(int);
-    Fixed Fixed::operator++(int);
-    static Fixed& max();
-
-    
+    Fixed& operator++();
+    Fixed& operator--();
+    Fixed operator--(int);
+    Fixed operator++(int);
+    static Fixed& min(Fixed& f, Fixed& s);
+    static Fixed& max(Fixed& f, Fixed& s);
+    static const Fixed& min(const Fixed& f, const Fixed& s) ;
+    static const Fixed& max(const Fixed& f, const Fixed& s) ;
 };
 std::ostream    &operator<<(std::ostream& out,const Fixed& obj);
 #endif

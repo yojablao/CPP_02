@@ -6,7 +6,7 @@
 /*   By: yojablao <yojablao@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 19:07:45 by yojablao          #+#    #+#             */
-/*   Updated: 2025/04/26 19:46:24 by yojablao         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:31:11 by yojablao         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ std::ostream    &operator<<(std::ostream& out,const Fixed& obj)
 {
     out <<obj.toFloat();
     return(out);
-    
 }
 bool Fixed::operator>(const Fixed& a) const
 {
@@ -91,28 +90,27 @@ bool Fixed::operator!=(const Fixed&a) const
 {
     return(this->f_point != a.f_point);
 }
-///+, -, *, and /.
+
 Fixed Fixed::operator+(const Fixed&a)const
 {
-    return(Fixed(this->toFloat() + a.toFloat()));
+    Fixed result;
+    return(result.setRawBits(this->f_point +a.f_point),result);
 }
 Fixed Fixed::operator-(const Fixed&a)const
 {
-    return(Fixed(this->toFloat() - a.toFloat()));
+    Fixed result;
+    return(result.setRawBits(this->f_point -a.f_point),result);
 }
 
 Fixed Fixed::operator*(const Fixed&a)const
 {
-    return(Fixed(this->toFloat() * a.toFloat()));
+    Fixed result;
+    return(result.setRawBits((this->f_point * a.f_point) / 256),result);
 }
 Fixed Fixed::operator/(const Fixed&a)const
 {
-    if (a.toFloat() == 0)
-    {
-        std::cerr << "Error: Division by zero!" << std::endl;
-        return Fixed(0);
-    }
-    return(Fixed(this->toFloat() / a.toFloat()));
+    Fixed result;
+    return(result.setRawBits((this->f_point  << shift) / a.f_point),result);
 }
 Fixed& Fixed::operator++()
 {
@@ -135,4 +133,20 @@ Fixed Fixed::operator++(int)
     Fixed tmp(*this);
     this->f_point += 1;
     return(tmp);
+}
+Fixed& Fixed::max(Fixed& f, Fixed& s)
+{
+    return (f >= s) ? f : s;
+}
+Fixed& Fixed::min(Fixed& f, Fixed& s)
+{
+    return (f >= s) ? s : f;
+}
+const Fixed& Fixed::min(const Fixed& f, const Fixed& s)
+{
+    return (f >= s) ? s : f;
+}
+const Fixed& Fixed::max(const Fixed& f, const Fixed& s)
+{
+    return (f >= s) ? f : s;
 }
